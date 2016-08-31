@@ -6,7 +6,7 @@ import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class Progressbar {
+public class ProgressBar {
     public void display(final String string, final File target, final IProgressbarCallback callback) {
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());

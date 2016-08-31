@@ -55,7 +55,7 @@ public enum Launcher {
         this.configFile = new File(this.dataDir, "launcher.json");
         this.cacheDir = new File(this.dataDir, "cache");
         this.modsDir = new File(this.dataDir, "mods");
-        this.coreModsDir = new File(this.modsDir, "1.7.10");
+        this.coreModsDir = new File(this.modsDir, "1.10.2");
         this.configDir = new File(this.dataDir, "config");
 
         if (!this.dataDir.exists()) {
@@ -110,13 +110,13 @@ public enum Launcher {
         this.putIfNull(config, "javaHome", System.getProperty("java.home"));
         this.putIfNull(config, "launcherBehaviour", 0);
         this.putIfNull(config, "language", Translator.DEFAULT_LANGUAGE);
-        this.putIfNull(config, "url", "http://fossils.flippedpolygon.com/modpack/pts/modpack.json");
+        this.putIfNull(config, "url", "https://raw.githubusercontent.com/MinecraftModDevelopment/MMD-Launcher/gh-pages/modpack.json");
         String[] array = new String[5];
-        array[0] = "-Xmx1G";
+        array[0] = "-Xmx4G";
         array[1] = "-XX:+UseConcMarkSweepGC";
         array[2] = "-XX:+CMSIncrementalMode";
         array[3] = "-XX:-UseAdaptiveSizePolicy";
-        array[4] = "-Xmn128M";
+        array[4] = "-Xmn256M";
         this.putIfNull(config, "jvmArguments", array);
     }
 
@@ -189,7 +189,7 @@ public enum Launcher {
 
         final LaunchTask task = new LaunchTaskBuilder()
                 .setCachesDir(this.cacheDir.toPath())
-                .setForgeVersion("1.7.10", "1.7.10-10.13.4.1614-1.7.10")
+                .setForgeVersion("1.10.2", "1.10.2-12.18.1.2071")
                 .setInstanceDir(this.dataDir.toPath())
                 .setUsername(this.config.get("username").getAsString())
                 .setPasswordSupplier(passwordSupplier)
@@ -286,11 +286,11 @@ public enum Launcher {
     public File getDataFolder() {
         String osName = System.getProperty("os.name").toLowerCase();
         if (osName.contains("win")) {
-            return new File(System.getenv("APPDATA"), ".revival-launcher");
+            return new File(System.getenv("APPDATA"), ".mmd-launcher");
         } else if (osName.contains("mac")) {
-            return new File(System.getProperty("user.home"), "/Library/Application Support/revival-launcher");
+            return new File(System.getProperty("user.home"), "/Library/Application Support/mmd-launcher");
         } else {
-            return new File(System.getProperty("user.home"), ".revival-launcher");
+            return new File(System.getProperty("user.home"), ".mmd-launcher");
         }
     }
 }
