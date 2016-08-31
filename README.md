@@ -1,2 +1,3 @@
-# Revival Launcher
-Because Technic stucks™
+# MMD Launcher
+
+Launcher for MMD.
