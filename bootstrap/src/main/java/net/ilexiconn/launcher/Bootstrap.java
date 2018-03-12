@@ -34,7 +34,7 @@ public class Bootstrap {
     public Version newerVersion;
     public String newerURL;
 
-    public Progressbar progressbar;
+    public ProgressBar progressbar;
     public String[] args;
 
     public static void main(String[] args) {
@@ -80,7 +80,7 @@ public class Bootstrap {
             }
         }
 
-        this.progressbar = new Progressbar();
+        this.progressbar = new ProgressBar();
     }
 
     public void start() throws IOException {
