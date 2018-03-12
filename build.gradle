@@ -3,7 +3,7 @@ subprojects {
 
     group = "net.ilexiconn"
     archivesBaseName = "launcher"
-    version = "0.1.0-develop"
+    version = "0.1.1-develop"
     sourceCompatibility = targetCompatibility = "1.8"
 
     repositories {
