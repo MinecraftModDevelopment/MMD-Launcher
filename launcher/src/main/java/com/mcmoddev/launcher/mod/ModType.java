@@ -1,8 +1,8 @@
-package net.ilexiconn.launcher.mod;
-
-import net.ilexiconn.launcher.Launcher;
+package com.mcmoddev.launcher.mod;
 
 import java.io.File;
+
+import com.mcmoddev.launcher.Launcher;
 
 public enum ModType {
     MOD(Launcher.INSTANCE.modsDir),

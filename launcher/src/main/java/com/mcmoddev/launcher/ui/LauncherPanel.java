@@ -1,9 +1,9 @@
-package net.ilexiconn.launcher.ui;
+package com.mcmoddev.launcher.ui;
 
 import com.google.gson.JsonElement;
-import net.ilexiconn.launcher.Launcher;
-import net.ilexiconn.launcher.resource.RemoteResourceLocation;
-import net.ilexiconn.launcher.resource.ResourceLocation;
+import com.mcmoddev.launcher.Launcher;
+import com.mcmoddev.launcher.resource.RemoteResourceLocation;
+import com.mcmoddev.launcher.resource.ResourceLocation;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,7 +13,10 @@ import java.util.ArrayList;
 import java.util.Map;
 
 public class LauncherPanel extends JPanel {
-    public static final ResourceLocation BANNER = new ResourceLocation("textures/banner.png");
+
+	private static final long serialVersionUID = -2288594757446321116L;
+
+	public static final ResourceLocation BANNER = new ResourceLocation("textures/banner.png");
     public static final ResourceLocation PLAY = new ResourceLocation("textures/play.png");
     public static final ResourceLocation PLAY_HOVER = new ResourceLocation("textures/play_hover.png");
 
@@ -38,9 +41,9 @@ public class LauncherPanel extends JPanel {
 
         this.banner = Launcher.INSTANCE.resourceLoader.loadImage(LauncherPanel.BANNER);
         if (Launcher.INSTANCE.isCached) {
-            Map.Entry<String, JsonElement> entry = new ArrayList<>(Launcher.INSTANCE.cache.entrySet()).get(0);
-            String username = entry.getValue().getAsJsonObject().get("selectedProfile").getAsJsonObject().get("name").getAsString();
-            this.loadAvatar(username);
+            final Map.Entry<String, JsonElement> entry = new ArrayList<>(Launcher.INSTANCE.cache.entrySet()).get(0);
+            final String obtained_username = entry.getValue().getAsJsonObject().get("selectedProfile").getAsJsonObject().get("name").getAsString();
+            this.loadAvatar(obtained_username);
         } else {
             this.loadAvatar("char");
         }
@@ -65,6 +68,7 @@ public class LauncherPanel extends JPanel {
         this.play.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         this.play.setFocusPainted(false);
         this.play.addActionListener(e -> new Thread() {
+        	@Override
             public void run() {
                 try {
                     LauncherPanel.this.username.setEnabled(false);
@@ -118,8 +122,8 @@ public class LauncherPanel extends JPanel {
         g.fillRect(0, 358, 854, 90);
 
         if (this.taskCount >= 0) {
-            String text = (int) (this.currentTask + 1.0F) + "/" + (int) (this.taskCount + 1.0F) + ": " + this.currentTaskName;
-            int width = g.getFontMetrics().stringWidth(text);
+            final String text = (int) (this.currentTask + 1.0F) + "/" + (int) (this.taskCount + 1.0F) + ": " + this.currentTaskName;
+            final int width = g.getFontMetrics().stringWidth(text);
 
             g.setColor(Color.DARK_GRAY);
             g.fillRect(0, 0, 854, 36);

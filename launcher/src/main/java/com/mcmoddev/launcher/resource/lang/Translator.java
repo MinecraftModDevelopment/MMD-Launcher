@@ -1,10 +1,10 @@
-package net.ilexiconn.launcher.resource.lang;
+package com.mcmoddev.launcher.resource.lang;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import net.ilexiconn.launcher.resource.ResourceLoader;
-import net.ilexiconn.launcher.resource.ResourceLocation;
+import com.mcmoddev.launcher.resource.ResourceLoader;
+import com.mcmoddev.launcher.resource.ResourceLocation;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -15,7 +15,7 @@ public class Translator {
     public static final String DEFAULT_LANGUAGE = "en_US";
 
     private String currentLanguage = Translator.DEFAULT_LANGUAGE;
-    private Map<String, String> translationMap = new HashMap<>();
+    private final Map<String, String> translationMap = new HashMap<>();
 
     public Translator(String language, ResourceLoader resourceLoader) {
         this.loadLanguage(language, resourceLoader);
@@ -27,7 +27,7 @@ public class Translator {
         if (stream == null) {
             stream = resourceLoader.loadStream(new ResourceLocation("lang/" + Translator.DEFAULT_LANGUAGE + ".json"));
         }
-        JsonObject object = new JsonParser().parse(new InputStreamReader(stream)).getAsJsonObject();
+        final JsonObject object = new JsonParser().parse(new InputStreamReader(stream)).getAsJsonObject();
         for (Map.Entry<String, JsonElement> entry : object.entrySet()) {
             this.translationMap.put(entry.getKey(), entry.getValue().getAsString());
         }

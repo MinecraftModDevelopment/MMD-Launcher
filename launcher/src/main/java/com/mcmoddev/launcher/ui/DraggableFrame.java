@@ -1,4 +1,4 @@
-package net.ilexiconn.launcher.ui;
+package com.mcmoddev.launcher.ui;
 
 import javax.swing.*;
 import java.awt.event.MouseEvent;
@@ -6,7 +6,8 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
 public class DraggableFrame extends JFrame implements MouseListener, MouseMotionListener {
-    private int offsetX;
+	private static final long serialVersionUID = 6652151011512713236L;
+	private int offsetX;
     private int offsetY;
     private int headerHeight;
     private boolean dragging;
@@ -24,7 +25,7 @@ public class DraggableFrame extends JFrame implements MouseListener, MouseMotion
 
     @Override
     public void mouseClicked(MouseEvent e) {
-
+    	// Unused
     }
 
     @Override
@@ -43,12 +44,12 @@ public class DraggableFrame extends JFrame implements MouseListener, MouseMotion
 
     @Override
     public void mouseEntered(MouseEvent e) {
-
+    	// Unused
     }
 
     @Override
     public void mouseExited(MouseEvent e) {
-
+    	// Unused
     }
 
     @Override
@@ -60,6 +61,6 @@ public class DraggableFrame extends JFrame implements MouseListener, MouseMotion
 
     @Override
     public void mouseMoved(MouseEvent e) {
-
+    	// Unused
     }
 }

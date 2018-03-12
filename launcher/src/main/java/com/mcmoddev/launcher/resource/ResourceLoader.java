@@ -1,4 +1,4 @@
-package net.ilexiconn.launcher.resource;
+package com.mcmoddev.launcher.resource;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -11,8 +11,8 @@ import java.util.Map;
 
 public class ResourceLoader {
     private File cacheDir;
-    private Map<String, BufferedImage> imageMap = new HashMap<>();
-    private Map<String, ImageIcon> iconMap = new HashMap<>();
+    private final Map<String, BufferedImage> imageMap = new HashMap<>();
+    private final Map<String, ImageIcon> iconMap = new HashMap<>();
 
     public ResourceLoader(File cacheDir) {
         this.cacheDir = cacheDir;
@@ -28,7 +28,7 @@ public class ResourceLoader {
                     stream.close();
                     stream = location.getInputStream();
                 }
-                BufferedImage image = ImageIO.read(stream);
+                final BufferedImage image = ImageIO.read(stream);
                 stream.close();
                 this.imageMap.put(location.getLocation(), image);
             } catch (IOException e) {
@@ -40,7 +40,7 @@ public class ResourceLoader {
 
     public ImageIcon loadIcon(ResourceLocation location) {
         if (!this.imageMap.containsKey(location.getLocation())) {
-            ImageIcon icon = new ImageIcon(ResourceLoader.class.getResource(location.getLocation()));
+            final ImageIcon icon = new ImageIcon(ResourceLoader.class.getResource(location.getLocation()));
             this.iconMap.put(location.getLocation(), icon);
         }
         return this.iconMap.get(location.getLocation());

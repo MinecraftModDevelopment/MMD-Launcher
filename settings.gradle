@@ -1,4 +1,4 @@
-rootProject.name = "revival-launcher"
+rootProject.name = "MMD-Launcher"
 
 include "bootstrap"
 include "launcher"

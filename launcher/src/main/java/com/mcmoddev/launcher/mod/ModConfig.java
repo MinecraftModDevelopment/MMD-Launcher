@@ -1,4 +1,4 @@
-package net.ilexiconn.launcher.mod;
+package com.mcmoddev.launcher.mod;
 
 import com.google.gson.JsonObject;
 

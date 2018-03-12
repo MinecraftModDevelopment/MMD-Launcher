@@ -1,7 +1,7 @@
 subprojects {
     apply plugin: "java"
 
-    group = "net.ilexiconn"
+    group = "com.mcmoddev"
     archivesBaseName = "launcher"
     version = "0.1.1-develop"
     sourceCompatibility = targetCompatibility = "1.8"

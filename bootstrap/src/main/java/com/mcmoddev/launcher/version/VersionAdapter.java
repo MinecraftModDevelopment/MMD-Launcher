@@ -1,4 +1,4 @@
-package net.ilexiconn.launcher.version;
+package com.mcmoddev.launcher.version;
 
 import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;

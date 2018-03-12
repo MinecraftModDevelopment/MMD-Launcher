@@ -1,13 +1,14 @@
-package net.ilexiconn.launcher;
+package com.mcmoddev.launcher;
 
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
-import net.ilexiconn.launcher.mod.Mod;
-import net.ilexiconn.launcher.mod.ModConfig;
-import net.ilexiconn.launcher.resource.ResourceLoader;
-import net.ilexiconn.launcher.resource.lang.Translator;
-import net.ilexiconn.launcher.ui.IProgressCallback;
-import net.ilexiconn.launcher.ui.LauncherFrame;
+import com.mcmoddev.launcher.mod.Mod;
+import com.mcmoddev.launcher.mod.ModConfig;
+import com.mcmoddev.launcher.resource.ResourceLoader;
+import com.mcmoddev.launcher.resource.lang.Translator;
+import com.mcmoddev.launcher.ui.IProgressCallback;
+import com.mcmoddev.launcher.ui.LauncherFrame;
+
 import org.apache.commons.io.FileDeleteStrategy;
 import org.apache.commons.io.FileUtils;
 import uk.co.rx14.jmclaunchlib.LaunchSpec;
@@ -85,7 +86,7 @@ public enum Launcher {
         }
 
         if (this.cacheDir.exists()) {
-            File authFile = new File(this.cacheDir, "auth.json");
+            final File authFile = new File(this.cacheDir, "auth.json");
             if (authFile.exists()) {
                 try {
                     this.cache = new JsonParser().parse(new FileReader(authFile)).getAsJsonObject();
@@ -129,7 +130,7 @@ public enum Launcher {
             } else if (value instanceof Integer) {
                 config.addProperty(key, (Integer) value);
             } else if (value instanceof String[]) {
-                JsonArray array = new JsonArray();
+                final JsonArray array = new JsonArray();
                 for (String s : (String[]) value) {
                     array.add(s);
                 }
@@ -158,7 +159,7 @@ public enum Launcher {
             return;
         }
 
-        Map<String, JsonObject> map = new Gson().fromJson(new InputStreamReader(new URL(this.config.get("url").getAsString()).openStream()), new TypeToken<Map<String, JsonObject>>() {}.getType());
+        final Map<String, JsonObject> map = new Gson().fromJson(new InputStreamReader(new URL(this.config.get("url").getAsString()).openStream()), new TypeToken<Map<String, JsonObject>>() {}.getType());
         List<Mod> modList = map.entrySet().stream().map(entry -> new Mod(entry.getKey(), entry.getValue())).collect(Collectors.toList());
         if (!this.modsDir.exists()) {
             this.modsDir.mkdirs();
@@ -169,9 +170,9 @@ public enum Launcher {
         if (!this.configDir.exists()) {
             this.configDir.mkdirs();
         }
-        File[] files = this.modsDir.listFiles();
+        final File[] files = this.modsDir.listFiles();
         if (files != null) {
-            List<String> modNames = modList.stream().map(Mod::getFileName).collect(Collectors.toList());
+            final List<String> modNames = modList.stream().map(Mod::getFileName).collect(Collectors.toList());
             for (File file : files) {
                 if (!file.isDirectory() && !modNames.contains(file.getName())) {
                     System.out.println("Removing mod " + file.getName());
@@ -180,7 +181,7 @@ public enum Launcher {
             }
         }
         modList.removeIf(mod -> !mod.doDownload(new File(mod.getModType().getFile(), mod.getFileName())));
-        Exception e = this.downloadMods(modList);
+        final Exception e = this.downloadMods(modList);
         if (e != null) {
             this.frame.panel.username.setEnabled(true);
             this.frame.panel.password.setEnabled(true);
@@ -205,13 +206,13 @@ public enum Launcher {
             }
         }.start();
 
-        LaunchSpec launchSpec = task.getSpec();
+        final LaunchSpec launchSpec = task.getSpec();
         this.frame.panel.loadAvatar(launchSpec.getAuth().getSelectedProfile().getName());
-        Process process = launchSpec.run(Paths.get(this.config.get("javaHome").getAsString(), "bin", OS.getCURRENT() == OS.WINDOWS ? "java.exe" : "java"));
+        final Process process = launchSpec.run(Paths.get(this.config.get("javaHome").getAsString(), "bin", OS.getCURRENT() == OS.WINDOWS ? "java.exe" : "java"));
 
-        InputStream inputStream = process.getInputStream();
-        InputStreamReader streamReader = new InputStreamReader(inputStream);
-        BufferedReader bufferedReader = new BufferedReader(streamReader);
+        final InputStream inputStream = process.getInputStream();
+        final InputStreamReader streamReader = new InputStreamReader(inputStream);
+        final BufferedReader bufferedReader = new BufferedReader(streamReader);
         String line;
         while ((line = bufferedReader.readLine()) != null) {
             System.out.println(line);
@@ -259,13 +260,13 @@ public enum Launcher {
     public Exception downloadFile(String string, File file) {
         try {
             this.frame.panel.currentProgress = 0;
-            URL url = new URL(string);
-            HttpURLConnection connection = (HttpURLConnection) (url.openConnection());
-            long contentLength = connection.getContentLength();
-            InputStream inputStream = new BufferedInputStream(connection.getInputStream());
-            OutputStream outputStream = new FileOutputStream(file);
-            OutputStream bufferedOutputStream = new BufferedOutputStream(outputStream, 1024);
-            byte[] data = new byte[1024];
+            final URL url = new URL(string);
+            final HttpURLConnection connection = (HttpURLConnection) (url.openConnection());
+            final long contentLength = connection.getContentLength();
+            final InputStream inputStream = new BufferedInputStream(connection.getInputStream());
+            final OutputStream outputStream = new FileOutputStream(file);
+            final OutputStream bufferedOutputStream = new BufferedOutputStream(outputStream, 1024);
+            final byte[] data = new byte[1024];
             long downloaded = 0;
             int i;
             while ((i = inputStream.read(data, 0, 1024)) >= 0) {
@@ -284,7 +285,7 @@ public enum Launcher {
     }
 
     public File getDataFolder() {
-        String osName = System.getProperty("os.name").toLowerCase();
+        final String osName = System.getProperty("os.name").toLowerCase();
         if (osName.contains("win")) {
             return new File(System.getenv("APPDATA"), ".mmd-launcher");
         } else if (osName.contains("mac")) {

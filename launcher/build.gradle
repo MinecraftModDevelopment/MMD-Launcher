@@ -15,7 +15,7 @@ dependencies {
 
 jar {
     manifest {
-        attributes("Main-Class": "net.ilexiconn.launcher.Launcher")
+        attributes("Main-Class": "com.mcmoddev.launcher.Launcher")
     }
 }
 

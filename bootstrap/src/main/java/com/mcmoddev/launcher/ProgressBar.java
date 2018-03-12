@@ -1,4 +1,4 @@
-package net.ilexiconn.launcher;
+package com.mcmoddev.launcher;
 
 import javax.swing.*;
 import java.awt.*;

@@ -1,4 +1,4 @@
-package net.ilexiconn.launcher.resource;
+package com.mcmoddev.launcher.resource;
 
 import java.io.File;
 import java.io.IOException;
@@ -24,6 +24,6 @@ public class ResourceLocation {
     }
 
     public void cacheResource(InputStream stream, File cacheDir) throws IOException {
-
+    	// Unused
     }
 }

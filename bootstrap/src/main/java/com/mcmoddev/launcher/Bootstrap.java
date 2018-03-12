@@ -1,4 +1,4 @@
-package net.ilexiconn.launcher;
+package com.mcmoddev.launcher;
 
 import com.google.common.base.Charsets;
 import com.google.common.hash.Hashing;
@@ -8,8 +8,9 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
-import net.ilexiconn.launcher.version.Version;
-import net.ilexiconn.launcher.version.VersionAdapter;
+import com.mcmoddev.launcher.version.Version;
+import com.mcmoddev.launcher.version.VersionAdapter;
+
 import org.apache.commons.io.FileUtils;
 
 import java.io.*;
@@ -19,14 +20,14 @@ import java.util.List;
 import java.util.Map;
 
 public class Bootstrap {
-    public static final String URL = "http://pastebin.com/raw/kT55bi26";
+    public static final String URL = "https://raw.githubusercontent.com/MinecraftModDevelopment/MMD-Launcher/gh-pages/update.json";
 
     public File dataDir;
     public JsonParser jsonParser;
     public Gson gson;
 
     public Version currentVersion;
-    public String currentMD5;
+    public String currentSHA256;
 
     public File bootstrapFile;
     public File launcherFile;
@@ -38,8 +39,8 @@ public class Bootstrap {
     public String[] args;
 
     public static void main(String[] args) {
-        List<String> argumentList = Arrays.asList(args);
-        Bootstrap bootstrap = new Bootstrap(argumentList.contains("--portable") || argumentList.contains("-p"));
+        final List<String> argumentList = Arrays.asList(args);
+        final Bootstrap bootstrap = new Bootstrap(argumentList.contains("--portable") || argumentList.contains("-p"));
         bootstrap.args = args;
 
         try {
@@ -54,14 +55,14 @@ public class Bootstrap {
         this.jsonParser = new JsonParser();
         this.gson = new GsonBuilder().registerTypeAdapter(Version.class, new VersionAdapter()).setPrettyPrinting().create();
 
-        File bootstrapDir = new File(this.dataDir, "bootstrap");
+        final File bootstrapDir = new File(this.dataDir, "bootstrap");
         this.bootstrapFile = new File(bootstrapDir, "bootstrap.json");
         this.launcherFile = new File(bootstrapDir, "launcher.jar");
 
         if (bootstrapDir.exists()) {
             if (this.bootstrapFile.exists()) {
                 try {
-                    JsonObject object = this.jsonParser.parse(new FileReader(this.bootstrapFile)).getAsJsonObject();
+                    final JsonObject object = this.jsonParser.parse(new FileReader(this.bootstrapFile)).getAsJsonObject();
                     this.currentVersion = new Version(object.get("version").getAsString());
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
@@ -69,7 +70,7 @@ public class Bootstrap {
             }
             if (this.launcherFile.exists()) {
                 try {
-                    this.currentMD5 = Files.hash(this.launcherFile, Hashing.md5()).toString();
+                    this.currentSHA256 = Files.asByteSource(this.launcherFile).hash(Hashing.sha256()).toString();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -84,7 +85,7 @@ public class Bootstrap {
     }
 
     public void start() throws IOException {
-        Map<Version, JsonObject> map = this.gson.fromJson(new InputStreamReader(new URL(Bootstrap.URL).openStream()), new TypeToken<Map<Version, JsonObject>>() {}.getType());
+        final Map<Version, JsonObject> map = this.gson.fromJson(new InputStreamReader(new URL(Bootstrap.URL).openStream()), new TypeToken<Map<Version, JsonObject>>() {}.getType());
         for (Map.Entry<Version, JsonObject> entry : map.entrySet()) {
             int compare = entry.getKey().compareTo(this.currentVersion);
             if (compare > 0) {
@@ -98,8 +99,8 @@ public class Bootstrap {
                     this.newerURL = entry.getValue().get("url").getAsString();
                 }
             } else if (compare == 0) {
-                String actualMD5 = entry.getValue().get("md5").getAsString();
-                if (!this.currentMD5.equals(actualMD5)) {
+                final String actualSHA256 = entry.getValue().get("sha256").getAsString();
+                if (!this.currentSHA256.equals(actualSHA256)) {
                     this.newerVersion = entry.getKey();
                     this.newerURL = entry.getValue().get("url").getAsString();
                 }
@@ -115,9 +116,9 @@ public class Bootstrap {
                 }
             }
             this.progressbar.display(this.newerURL, this.launcherFile, () -> {
-                JsonObject object = new JsonObject();
+                final JsonObject object = new JsonObject();
                 object.addProperty("version", Bootstrap.this.newerVersion.get());
-                String json = Bootstrap.this.gson.toJson(object);
+                final String json = Bootstrap.this.gson.toJson(object);
                 try {
                     FileUtils.writeStringToFile(Bootstrap.this.bootstrapFile, json, Charsets.UTF_8);
                 } catch (IOException e) {
@@ -134,7 +135,7 @@ public class Bootstrap {
     public void launch() {
         String[] arguments = {"java", "-jar", this.launcherFile.getAbsolutePath()};
         arguments = this.concat(arguments, this.args);
-        ProcessBuilder process = new ProcessBuilder(arguments);
+        final ProcessBuilder process = new ProcessBuilder(arguments);
         process.directory(this.dataDir);
         try {
             process.start();
@@ -144,22 +145,22 @@ public class Bootstrap {
     }
 
     public String[] concat(String[] a, String[] b) {
-        int aLength = a.length;
-        int bLength = b.length;
-        String[] array = new String[aLength + bLength];
+        final int aLength = a.length;
+        final int bLength = b.length;
+        final String[] array = new String[aLength + bLength];
         System.arraycopy(a, 0, array, 0, aLength);
         System.arraycopy(b, 0, array, aLength, bLength);
         return array;
     }
 
     public File getDataFolder() {
-        String osName = System.getProperty("os.name").toLowerCase();
+        final String osName = System.getProperty("os.name").toLowerCase();
         if (osName.contains("win")) {
-            return new File(System.getenv("APPDATA"), ".revival-launcher");
+            return new File(System.getenv("APPDATA"), ".mmd-launcher");
         } else if (osName.contains("mac")) {
-            return new File(System.getProperty("user.home"), "/Library/Application Support/revival-launcher");
+            return new File(System.getProperty("user.home"), "/Library/Application Support/mmd-launcher");
         } else {
-            return new File(System.getProperty("user.home"), ".revival-launcher");
+            return new File(System.getProperty("user.home"), ".mmd-launcher");
         }
     }
 }

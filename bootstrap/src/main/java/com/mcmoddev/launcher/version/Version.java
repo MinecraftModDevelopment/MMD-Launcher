@@ -1,4 +1,4 @@
-package net.ilexiconn.launcher.version;
+package com.mcmoddev.launcher.version;
 
 public class Version implements Comparable<Version> {
     private String version;
@@ -21,12 +21,12 @@ public class Version implements Comparable<Version> {
         if (version == null) {
             return 1;
         }
-        String[] thisParts = this.get().split("\\.");
-        String[] otherParts = version.get().split("\\.");
-        int length = Math.max(thisParts.length, otherParts.length);
+        final String[] thisParts = this.get().split("\\.");
+        final String[] otherParts = version.get().split("\\.");
+        final int length = Math.max(thisParts.length, otherParts.length);
         for (int i = 0; i < length; i++) {
-            int thisPart = i < thisParts.length ? Integer.parseInt(thisParts[i]) : 0;
-            int thatPart = i < otherParts.length ? Integer.parseInt(otherParts[i]) : 0;
+            final int thisPart = i < thisParts.length ? Integer.parseInt(thisParts[i]) : 0;
+            final int thatPart = i < otherParts.length ? Integer.parseInt(otherParts[i]) : 0;
             if (thisPart < thatPart) {
                 return -1;
             } else if (thisPart > thatPart) {

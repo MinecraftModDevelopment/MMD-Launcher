@@ -1,4 +1,4 @@
-package net.ilexiconn.launcher.resource;
+package com.mcmoddev.launcher.resource;
 
 import org.apache.commons.io.IOUtils;
 
@@ -29,9 +29,9 @@ public class RemoteResourceLocation extends ResourceLocation {
 
     @Override
     public InputStream checkCache(File cacheDir) throws IOException {
-        File assetsDir = new File(cacheDir, "assets" + File.separator + "launcher");
+        final File assetsDir = new File(cacheDir, "assets" + File.separator + "launcher");
         if (assetsDir.exists()) {
-            File resource = new File(assetsDir, this.getLocation());
+            final File resource = new File(assetsDir, this.getLocation());
             if (resource.exists()) {
                 return new FileInputStream(resource);
             }
@@ -41,9 +41,9 @@ public class RemoteResourceLocation extends ResourceLocation {
 
     @Override
     public void cacheResource(InputStream stream, File cacheDir) throws IOException {
-        File assetsDir = new File(cacheDir, "assets" + File.separator + "launcher");
+        final File assetsDir = new File(cacheDir, "assets" + File.separator + "launcher");
         if (assetsDir.exists() || assetsDir.mkdirs()) {
-            OutputStream output = new FileOutputStream(new File(assetsDir, this.getLocation()));
+            final OutputStream output = new FileOutputStream(new File(assetsDir, this.getLocation()));
             IOUtils.copy(stream, output);
             output.close();
         }

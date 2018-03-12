@@ -11,14 +11,14 @@ dependencies {
 
 jar {
     manifest {
-        attributes("Main-Class": "net.ilexiconn.launcher.Bootstrap")
+        attributes("Main-Class": "com.mcmoddev.launcher.Bootstrap")
     }
 }
 
 build.dependsOn(shadowJar)
 
 launch4j {
-    mainClassName = "net.ilexiconn.launcher.Bootstrap"
+    mainClassName = "com.mcmoddev.launcher.Bootstrap"
     icon = "C:/Users/iLexiconn/Git/mmd-launcher/bootstrap/src/main/resources/icon.ico"
     copyConfigurable = project.tasks.shadowJar.outputs.files
     jar = "lib/${project.tasks.shadowJar.archiveName}"
