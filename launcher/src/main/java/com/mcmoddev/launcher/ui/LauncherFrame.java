@@ -26,7 +26,7 @@ public class LauncherFrame extends DraggableFrame {
             e.printStackTrace();
         }
 
-        this.setTitle("Revival Launcher");
+        this.setTitle("MMD Launcher");
         this.setIconImage(Launcher.INSTANCE.resourceLoader.loadImage(LauncherFrame.LOGO));
         this.setSize(854, 480);
         this.setResizable(false);

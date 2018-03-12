@@ -22,8 +22,8 @@ launch4j {
     icon = "C:/Users/iLexiconn/Git/mmd-launcher/bootstrap/src/main/resources/icon.ico"
     copyConfigurable = project.tasks.shadowJar.outputs.files
     jar = "lib/${project.tasks.shadowJar.archiveName}"
-    outfile = "Revival Launcher.exe"
-    companyName = "iLexiconn"
+    outfile = "MMD Launcher.exe"
+    companyName = "Minecraft Mod Development"
     fileDescription = "Bootstrap for the MMD Launcher"
     windowTitle = "Bootstrap"
 }

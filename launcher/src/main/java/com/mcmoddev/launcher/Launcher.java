@@ -56,7 +56,7 @@ public enum Launcher {
         this.configFile = new File(this.dataDir, "launcher.json");
         this.cacheDir = new File(this.dataDir, "cache");
         this.modsDir = new File(this.dataDir, "mods");
-        this.coreModsDir = new File(this.modsDir, "1.10.2");
+        this.coreModsDir = new File(this.modsDir, "1.12.2");
         this.configDir = new File(this.dataDir, "config");
 
         if (!this.dataDir.exists()) {
@@ -190,7 +190,7 @@ public enum Launcher {
 
         final LaunchTask task = new LaunchTaskBuilder()
                 .setCachesDir(this.cacheDir.toPath())
-                .setForgeVersion("1.10.2", "1.10.2-12.18.1.2071")
+                .setForgeVersion("1.12.2", "1.12.2-14.23.2.2625")
                 .setInstanceDir(this.dataDir.toPath())
                 .setUsername(this.config.get("username").getAsString())
                 .setPasswordSupplier(passwordSupplier)
